@@ -8,7 +8,7 @@
 
 ##### Project Set-Up
 1. Before we get started, we need to ensure we have the proper software and dependencies to run this project.<br>
-   This project requires the Eclipse IDE for Java Developers. <br>
-   You can download here: https://www.eclipse.org/downloads/packages/release/2024-09/r/eclipse-ide-enterprise-java-and-web-developers
+   - This project requires the Eclipse IDE for Java Developers. <br>
+     You can download here: https://www.eclipse.org/downloads/packages/release/2024-09/r/eclipse-ide-enterprise-java-and-web-developers
 2. 
 Any additional configuration steps needed to connect to the database
