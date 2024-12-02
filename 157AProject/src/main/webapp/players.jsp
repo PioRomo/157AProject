@@ -9,10 +9,10 @@
     <title>Players</title>
     <script src="https://cdn.tailwindcss.com"></script> <!-- Tailwind CSS -->
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="bg-gradient-to-tl from-purple-200 from-25% via-purple-700 via-50% to-indigo-500 to-80% min-h-screen">
 	<%@ include file="navbar.jsp" %>
     <div class="container mx-auto py-8">
-        <h1 class="text-3xl font-bold text-center mb-8">Players</h1>
+        <h1 class="text-3xl font-bold text-center mb-8 text-white">Players</h1>
 
         <%
             // Retrieve the list of players from the request attribute
