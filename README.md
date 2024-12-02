@@ -13,9 +13,14 @@
    - This project also requires Apache Tomcat in order to run. We use Tomcat v9.0.89 for this project, <br>
      but any version within Tomcat v9.0.xx should work just fine. You can download here: https://tomcat.apache.org/download-90.cgi
    - This project of course requires both Java and mySQL. Ensure your device contains a JDK, as well as mySQL. <br>
-     We use mySQL from the terminal, but you can also use the workbench if you like.
+     We use mySQL from the terminal, but you can also use the workbench if you like. Make note of your username and password!
    - Lastly, the  project requires a mySQL connector/ JDBC. This project uses version 9.0.0. <br>
      You can download here: https://downloads.mysql.com/archives/c-j/
+     
    > For now, just download the software. We'll show you how to configure it next!
-2. 
+   
+2. OK! Now that you've downloaded what's needed, the first step is to clone our repository. <br>
+   Open your terminal and run the following command: `git clone https://github.com/PioRomo/157AProject.git`
+3. Open Eclipse and import the project. Select **File > Import**. <br>
+   In the Import Wizard, click **General > Existing Projects Into Workspace**
 Any additional configuration steps needed to connect to the database
