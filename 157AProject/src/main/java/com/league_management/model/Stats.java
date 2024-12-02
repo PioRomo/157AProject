@@ -2,6 +2,7 @@ package com.league_management.model;
 
 public class Stats {
     private int playerID;
+    private String playerName; 
     private int teamID;
     private int points;
     private int assists;
@@ -11,8 +12,9 @@ public class Stats {
     public Stats() {
     }
 
-    public Stats(int playerID, int teamID, int points, int assists, int rebounds) {
+    public Stats(int playerID, String playerName, int teamID, int points, int assists, int rebounds) {
         this.playerID = playerID;
+        this.playerName = playerName; 
         this.teamID = teamID;
         this.points = points;
         this.assists = assists;
@@ -26,6 +28,14 @@ public class Stats {
 
     public void setPlayerID(int playerID) {
         this.playerID = playerID;
+    }
+    
+    public String getPlayerName() {
+    	return playerName; 
+    }
+    
+    public void setPlayerName() {
+    	this.playerName = playerName; 
     }
 
     public int getTeamID() {

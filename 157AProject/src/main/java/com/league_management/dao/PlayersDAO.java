@@ -14,15 +14,35 @@ public class PlayersDAO {
         this.connection = connection;
     }
 
-    // Method to add a new player
-    public boolean addPlayer(Players player) throws SQLException {
-        String query = "INSERT INTO Players (PlayerID, TeamID, Name, Position) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, player.getPlayerID());
-            stmt.setInt(2, player.getTeamID());
-            stmt.setString(3, player.getName());
-            stmt.setString(4, player.getPosition());
-            return stmt.executeUpdate() > 0;
+    public int addPlayer(Players player) throws SQLException {
+        String query = "INSERT INTO Players (TeamID, Name, Position) VALUES (?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setInt(1, player.getTeamID());
+            stmt.setString(2, player.getName());
+            stmt.setString(3, player.getPosition());
+
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows > 0) {
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        player.setPlayerID(generatedKeys.getInt(1));  // Set the generated playerID
+                        return player.getPlayerID();
+                    } else {
+                        throw new SQLException("Creating player failed, no ID obtained.");
+                    }
+                }
+            }
+            return 0;  // Return 0 if player insertion fails
+        }
+    }
+
+
+    //Method to delete all players from a team
+    public void deletePlayersByTeamID(int teamID) throws SQLException {
+        String sql = "DELETE FROM players WHERE teamID = ? LIMIT 3";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, teamID);
+            statement.executeUpdate();
         }
     }
 
@@ -43,27 +63,7 @@ public class PlayersDAO {
             return null;
         }
     }
-
-    // Method to update a player's information
-    public boolean updatePlayer(Players player) throws SQLException {
-        String query = "UPDATE Players SET TeamID = ?, Name = ?, Position = ? WHERE PlayerID = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, player.getTeamID());
-            stmt.setString(2, player.getName());
-            stmt.setString(3, player.getPosition());
-            stmt.setInt(4, player.getPlayerID());
-            return stmt.executeUpdate() > 0;
-        }
-    }
-
-    // Method to delete a player by ID
-    public boolean deletePlayer(int playerID) throws SQLException {
-        String query = "DELETE FROM Players WHERE PlayerID = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, playerID);
-            return stmt.executeUpdate() > 0;
-        }
-    }
+  
 
     // Method to retrieve all players in the league
     public List<Players> getAllPlayers() throws SQLException {

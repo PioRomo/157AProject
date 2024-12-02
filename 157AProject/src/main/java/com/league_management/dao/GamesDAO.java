@@ -14,13 +14,12 @@ public class GamesDAO {
 
     // Method to add a new game
     public boolean addGame(Games game) throws SQLException {
-        String query = "INSERT INTO Games (GameID, HomeTeamID, AwayTeamID, HomeTeamScore, AwayTeamScore) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Games (HomeTeamID, AwayTeamID, HomeTeamScore, AwayTeamScore) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, game.getGameID());
-            stmt.setInt(2, game.getHomeTeamID());
-            stmt.setInt(3, game.getAwayTeamID());
-            stmt.setInt(4, game.getHomeTeamScore());
-            stmt.setInt(5, game.getAwayTeamScore());
+            stmt.setInt(1, game.getHomeTeamID());
+            stmt.setInt(2, game.getAwayTeamID());
+            stmt.setInt(3, game.getHomeTeamScore());
+            stmt.setInt(4, game.getAwayTeamScore());
             return stmt.executeUpdate() > 0;
         }
     }
@@ -41,26 +40,6 @@ public class GamesDAO {
                 );
             }
             return null;
-        }
-    }
-
-    // Method to update a game's score
-    public boolean updateGameScore(Games game) throws SQLException {
-        String query = "UPDATE Games SET HomeTeamScore = ?, AwayTeamScore = ? WHERE GameID = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, game.getHomeTeamScore());
-            stmt.setInt(2, game.getAwayTeamScore());
-            stmt.setInt(3, game.getGameID());
-            return stmt.executeUpdate() > 0;
-        }
-    }
-
-    // Method to delete a game by ID
-    public boolean deleteGame(int gameID) throws SQLException {
-        String query = "DELETE FROM Games WHERE GameID = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, gameID);
-            return stmt.executeUpdate() > 0;
         }
     }
 

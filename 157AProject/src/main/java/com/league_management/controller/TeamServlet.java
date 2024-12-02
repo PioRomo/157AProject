@@ -1,6 +1,8 @@
 package com.league_management.controller;
 
 import com.league_management.dao.TeamDAO;
+import com.league_management.dao.PlayersDAO;
+
 import com.league_management.model.Team;
 import com.league_management.dao.DatabaseConnection;
 
@@ -12,7 +14,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/team")
+@WebServlet("/teams")
 public class TeamServlet extends HttpServlet {
 
     private TeamDAO teamDAO;
@@ -48,83 +50,64 @@ public class TeamServlet extends HttpServlet {
     // Handle POST request to add a new team
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Get parameters from the request
-        String teamName = request.getParameter("teamName");
-        int wins = Integer.parseInt(request.getParameter("wins"));
-        int losses = Integer.parseInt(request.getParameter("losses"));
+        String method = request.getParameter("_method");
 
-        // Create a new Team object
-        Team newTeam = new Team();
-        newTeam.setTeamName(teamName);
-        newTeam.setWins(wins);
-        newTeam.setLosses(losses);
+        if ("DELETE".equalsIgnoreCase(method)) {
+            doDelete(request, response); // Call the doDelete method to handle deletion
+        } else {
+            // Handle other POST logic (e.g., adding a team)
+            String teamName = request.getParameter("teamName");
+            int wins = Integer.parseInt(request.getParameter("wins"));
+            int losses = Integer.parseInt(request.getParameter("losses"));
 
-        try {
-            // Add the team to the database
-            boolean added = teamDAO.addTeam(newTeam);
+            Team newTeam = new Team();
+            newTeam.setTeamName(teamName);
+            newTeam.setWins(wins);
+            newTeam.setLosses(losses);
 
-            // Redirect to the list of teams after adding
-            if (added) {
-                response.sendRedirect("team");
-            } else {
-                request.setAttribute("error", "Failed to add team");
-                request.getRequestDispatcher("/addTeam.jsp").forward(request, response);
+            try {
+                // Add team and retrieve teamID
+                int teamID = teamDAO.addTeam(newTeam);
+
+                if (teamID > 0) {
+                    response.sendRedirect("teams");
+                } else {
+                    request.setAttribute("error", "Failed to add team");
+                    request.getRequestDispatcher("/addTeam.jsp").forward(request, response);
+                }
+            } catch (SQLException e) {
+                throw new ServletException("Error adding team", e);
             }
-        } catch (SQLException e) {
-            throw new ServletException("Error adding team", e);
         }
     }
 
-    // Handle PUT request to update an existing team (if you implement this method)
-    @Override
-    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Retrieve parameters for updating the team
-        int teamID = Integer.parseInt(request.getParameter("teamID"));
-        String teamName = request.getParameter("teamName");
-        int wins = Integer.parseInt(request.getParameter("wins"));
-        int losses = Integer.parseInt(request.getParameter("losses"));
+   
 
-        // Create a new Team object
-        Team updatedTeam = new Team();
-        updatedTeam.setTeamID(teamID);
-        updatedTeam.setTeamName(teamName);
-        updatedTeam.setWins(wins);
-        updatedTeam.setLosses(losses);
 
-        try {
-            // Update the team in the database
-            boolean updated = teamDAO.updateTeam(updatedTeam);
-
-            // Redirect to the team list if updated successfully
-            if (updated) {
-                response.sendRedirect("team");
-            } else {
-                request.setAttribute("error", "Failed to update team");
-                request.getRequestDispatcher("/editTeam.jsp").forward(request, response);
-            }
-        } catch (SQLException e) {
-            throw new ServletException("Error updating team", e);
-        }
-    }
 
     // Handle DELETE request to delete a team
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int teamID = Integer.parseInt(request.getParameter("teamID"));
-
         try {
-            // Delete the team from the database
-            boolean deleted = teamDAO.deleteTeam(teamID);
+            // Parse the teamID from the request
+            int teamID = Integer.parseInt(request.getParameter("teamID"));
+            
+            // Step 1: Delete players associated with the team
+            PlayersDAO playersDAO = new PlayersDAO(DatabaseConnection.getConnection());
+            playersDAO.deletePlayersByTeamID(teamID);
 
-            // Redirect to the team list after deletion
-            if (deleted) {
-                response.sendRedirect("team");
-            } else {
-                request.setAttribute("error", "Failed to delete team");
-                request.getRequestDispatcher("/teamList.jsp").forward(request, response);
-            }
-        } catch (SQLException e) {
-            throw new ServletException("Error deleting team", e);
+            // Step 2: Delete the team itself
+            TeamDAO teamsDAO = new TeamDAO(DatabaseConnection.getConnection());
+            teamsDAO.deleteTeam(teamID);
+
+            // Respond with a success message
+            response.sendRedirect("teams");
+        } catch (Exception e) {
+            // Handle errors
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().write("Error deleting team: " + e.getMessage());
+            e.printStackTrace();
         }
     }
+
 }

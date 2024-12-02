@@ -14,17 +14,28 @@ public class TeamDAO {
         this.connection = connection;
     }
 
-    // Method to add a new team
-    public boolean addTeam(Team team) throws SQLException {
-        String query = "INSERT INTO Teams (TeamID, TeamName, Wins, Losses) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, team.getTeamID());
-            stmt.setString(2, team.getTeamName());
-            stmt.setInt(3, team.getWins());
-            stmt.setInt(4, team.getLosses());
-            return stmt.executeUpdate() > 0;
+    public int addTeam(Team team) throws SQLException {
+        String query = "INSERT INTO Teams (TeamName, Wins, Losses) VALUES (?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, team.getTeamName());
+            stmt.setInt(2, team.getWins());
+            stmt.setInt(3, team.getLosses());
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Adding team failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1); // Return the generated teamID
+                } else {
+                    throw new SQLException("Adding team failed, no ID obtained.");
+                }
+            }
         }
     }
+
 
     // Method to get a team by ID
     public Team getTeamByID(int teamID) throws SQLException {
