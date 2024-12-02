@@ -34,7 +34,7 @@
 7. Head back to your terminal and input: `mysql -u root -p` <br>
    This command will start mySQL. The terminal will prompt you for your password, so enter it. mySQL is now active!
 8. Now we will create the database using the following command: `SOURCE ~/Downloads/157AProject/create_schema.sql`
-   The database should now exist within mySQL, so switch to it using `USE 157AProject` <br>
+   The database should now exist within mySQL, so switch to it using `USE 157AProject;` <br>
 9. Now switch back to eclipse. Ensure Tomcat is added to Eclipse: <br>
    **Eclipse > Preferences**. In the wizard, select **Server**. From the dropdown menu, click **Runtime Environments**. <br>
    - If it isn't there already, add Tomcat by selecting **Add**.
