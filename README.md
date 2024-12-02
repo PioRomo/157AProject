@@ -51,5 +51,3 @@
     - Open up your web browser and navigate to: http://localhost:8080/157AProject/
     - It should display the home page. You can now toy around with the application. To stop the server, right-click the project and select **Stop**. 
    
-   
-Any additional configuration steps needed to connect to the database
