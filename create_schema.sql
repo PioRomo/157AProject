@@ -1,6 +1,6 @@
 -- Create the database
-CREATE DATABASE IF NOT EXISTS 157AProjectTEST;
-USE 157AProjectTEST;
+CREATE DATABASE IF NOT EXISTS 157AProject;
+USE 157AProject;
 
 -- Create Teams table
 CREATE TABLE Teams (
