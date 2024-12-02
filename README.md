@@ -16,5 +16,6 @@
      We use mySQL from the terminal, but you can also use the workbench if you like.
    - Lastly, the  project requires a mySQL connector/ JDBC. This project uses version 9.0.0. <br>
      You can download here: https://downloads.mysql.com/archives/c-j/
+   > For now, just download the software. We'll show you how to configure it next!
 2. 
 Any additional configuration steps needed to connect to the database
