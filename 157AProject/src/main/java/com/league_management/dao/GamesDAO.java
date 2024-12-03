@@ -12,17 +12,45 @@ public class GamesDAO {
         this.connection = connection;
     }
 
-    // Method to add a new game
+ // Method to add a new game and update teams win/loss record
     public boolean addGame(Games game) throws SQLException {
-        String query = "INSERT INTO Games (HomeTeamID, AwayTeamID, HomeTeamScore, AwayTeamScore) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, game.getHomeTeamID());
-            stmt.setInt(2, game.getAwayTeamID());
-            stmt.setInt(3, game.getHomeTeamScore());
-            stmt.setInt(4, game.getAwayTeamScore());
-            return stmt.executeUpdate() > 0;
+        String insertGameQuery = "INSERT INTO Games (HomeTeamID, AwayTeamID, HomeTeamScore, AwayTeamScore) VALUES (?, ?, ?, ?)";
+        String updateWinsQuery = "UPDATE Teams SET Wins = Wins + 1 WHERE TeamID = ?";
+        String updateLossesQuery = "UPDATE Teams SET Losses = Losses + 1 WHERE TeamID = ?";
+        
+        try (
+            PreparedStatement insertGameStmt = connection.prepareStatement(insertGameQuery);
+            PreparedStatement updateWinsStmt = connection.prepareStatement(updateWinsQuery);
+            PreparedStatement updateLossesStmt = connection.prepareStatement(updateLossesQuery)
+        ) {
+            // Add the game record
+            insertGameStmt.setInt(1, game.getHomeTeamID());
+            insertGameStmt.setInt(2, game.getAwayTeamID());
+            insertGameStmt.setInt(3, game.getHomeTeamScore());
+            insertGameStmt.setInt(4, game.getAwayTeamScore());
+            int rowsAffected = insertGameStmt.executeUpdate();
+            
+            if (rowsAffected > 0) {
+                // Determine the winner and loser
+                if (game.getHomeTeamScore() > game.getAwayTeamScore()) {
+                    // Home team wins
+                    updateWinsStmt.setInt(1, game.getHomeTeamID());
+                    updateLossesStmt.setInt(1, game.getAwayTeamID());
+                } else {
+                    // Away team wins
+                    updateWinsStmt.setInt(1, game.getAwayTeamID());
+                    updateLossesStmt.setInt(1, game.getHomeTeamID());
+                }
+                
+                // Execute the updates
+                updateWinsStmt.executeUpdate();
+                updateLossesStmt.executeUpdate();
+            }
+            
+            return rowsAffected > 0;
         }
     }
+
 
     // Method to get a game by ID
     public Games getGameByID(int gameID) throws SQLException {
