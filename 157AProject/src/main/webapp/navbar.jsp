@@ -1,9 +1,9 @@
  <!-- Navbar -->
-    <nav class="bg-blue-600">
+    <nav class="bg-black">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center">
-                    <a href="/" class="text-white text-2xl font-bold">League Management</a>
+                    <a href="/157AProject" class="text-white text-2xl font-bold">League Management</a>
                 </div>
                 <div class="flex space-x-4">
                     <!-- Navbar Links -->
