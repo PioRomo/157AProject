@@ -25,9 +25,15 @@
    In the Import Wizard, click **General > Existing Projects Into Workspace**
    - We need to ensure the project is listed as a Dynamic Web Project. To do this, right-click the project then <br>
      navigate to **Properties > Project Facets**. Both **Java** and **Dynamic Web Module** should be checked. Make sure to *apply*. 
-5. Now we add the mySQL connector. In Eclipse, right-click the project and select **Build Path > Configure Build Path** <br>
+4. Now we add the mySQL connector. In Eclipse, right-click the project and select **Build Path > Configure Build Path** <br>
    In the wizard, go to the **Library** if you aren't there already. Select **Modulepath** then click **Add External JARs** <br>
    Navigate to where you downloaded the mySQL connector and select. You should see the jar listed under **Modulepath**.
+5. Alternatively, if you cannot figure out what to do for 4, we can add in the mySQL connector through the **Properties** menu in our project.
+   - In Eclipse, open up the Project explorer and right click the 157AProject to go into Properties.
+   - Go to **Java Build Path**, and enter into the **Libraries** tab.
+   - Once in the tab, you should see two entries that are red. Replace the mysqlconnector-j-9.*.jar entry to the jar that is contained in the mySQL         connector file you downloaded.
+   - While you are here, go and replace the **servlet-api.jar** to the one contained to where you downloaded your Apache Tomcat server. There should        be a folder that contains multiple jars, you are specifically looking for **servlet-api.jar**.
+   - After you are done, click apply and you are all good!
 6. This is a good segway into setting up MySQL. Navigate to **157AProject > src/main/java > com.league_management.dao > DatabaseConnection.java** <br>
    On line 12, you'll see `return DriverManager.getConnection("jdbc:mysql://localhost:3306/157AProject", "root", "password");` <br>
    Replace `password` with your own credential from earlier. 
