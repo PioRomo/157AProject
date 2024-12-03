@@ -26,43 +26,60 @@
         <div class="flex">
         
 		<div class="p-5 basis-1/5 justify-center align-center">
+			<form action="stats" method="POST" class="max-w-lg mx-auto p-6 bg-white shadow-lg rounded-lg mt-6 mb-6">
+    			<h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Update Player Stats</h2>
+				<input type="hidden" name="action" id="action" value="update">
+    			<!-- Player ID -->
+    			<div class="mb-4">
+        			<label for="playerId" class="block text-sm font-medium text-gray-700">Player ID</label>
+        			<input type="number" id="playerId" name="playerId" required
+               			class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    			</div>
+
+    			<!-- Points -->
+    			<div class="mb-4">
+        			<label for="points" class="block text-sm font-medium text-gray-700">Points</label>
+        			<input type="number" id="points" name="points" required
+               			class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    			</div>
+
+    			<!-- Assists -->
+    			<div class="mb-4">
+        			<label for="assists" class="block text-sm font-medium text-gray-700">Assists</label>
+        			<input type="number" id="assists" name="assists" required
+               			class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    			</div>
+
+    			<!-- Rebounds -->
+    			<div class="mb-4">
+        			<label for="rebounds" class="block text-sm font-medium text-gray-700">Rebounds</label>
+        			<input type="number" id="rebounds" name="rebounds" required
+               			class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    			</div>
+
+   			 	<!-- Submit Button -->
+    			<div class="mb-6 text-center">
+        			<button type="submit" class="w-full py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+            		Update Stats
+        			</button>
+    			</div>
+			</form>
+			
 			<form action="stats" method="POST" class="max-w-lg mx-auto p-6 bg-white shadow-lg rounded-lg mt-6">
-	    			<h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Update Player Stats</h2>
-	
-	    			<!-- Player ID -->
-	    			<div class="mb-4">
-	        			<label for="playerId" class="block text-sm font-medium text-gray-700">Player ID</label>
-	        			<input type="number" id="playerId" name="playerId" required
-	               			class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
-	    			</div>
-	
-	    			<!-- Points -->
-	    			<div class="mb-4">
-	        			<label for="points" class="block text-sm font-medium text-gray-700">Points</label>
-	        			<input type="number" id="points" name="points" required
-	               			class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
-	    			</div>
-	
-	    			<!-- Assists -->
-	    			<div class="mb-4">
-	        			<label for="assists" class="block text-sm font-medium text-gray-700">Assists</label>
-	        			<input type="number" id="assists" name="assists" required
-	               			class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
-	    			</div>
-	
-	    			<!-- Rebounds -->
-	    			<div class="mb-4">
-	        			<label for="rebounds" class="block text-sm font-medium text-gray-700">Rebounds</label>
-	        			<input type="number" id="rebounds" name="rebounds" required
-	               			class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
-	    			</div>
-	
-	   			 	<!-- Submit Button -->
-	    			<div class="mb-6 text-center">
-	        			<button type="submit" class="w-full py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-	            		Update Stats
-	        			</button>
-	    			</div>
+				<h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Reset a Player's Stats</h2>
+				<input type="hidden" name="action" id="action" value="empty">
+    			<!-- Player ID -->
+    			<div class="mb-4">
+        			<label for="playerId" class="block text-sm font-medium text-gray-700">Player ID</label>
+        			<input type="number" id="playerId" name="playerId" required
+               			class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    			</div>
+    			
+    			<div class="mb-6 text-center">
+        			<button type="submit" class="w-full py-2 px-4 bg-red-500 hover:bg-red-700 text-white font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+            		Reset Stats
+        			</button>
+    			</div>
 			</form>
 		</div>
 		<div class="p-5 basis-4/5 justify-center align-center">

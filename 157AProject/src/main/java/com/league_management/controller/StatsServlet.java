@@ -32,7 +32,6 @@ public class StatsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-
         try {
             if (action == null || action.isEmpty()) {
                 listStats(request, response);  // List stats
@@ -48,7 +47,16 @@ public class StatsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         try {
-			updateStats(request, response);
+        	
+        	if ("empty".equals(action)) {
+        		System.out.println("Clearing Player Stats");
+        		clearStats(request, response);        		
+        	}
+        	else {
+        		System.out.println("Updating Player Stats");
+        		updateStats(request, response);
+        	}
+        	
 		} catch (SQLException e) {
 			 throw new ServletException("Error processing POST request", e);
 		}
@@ -111,5 +119,21 @@ public class StatsServlet extends HttpServlet {
         statsDAO.updateStats(updatedStats);
 
         response.sendRedirect("stats");  // Redirect back to stats page
+    }
+    
+    private void clearStats(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+    	int playerId = Integer.parseInt(request.getParameter("playerId"));
+    	
+    	// Fetch player name (not mandatory, but can be useful if needed for display)
+        String playerName = statsDAO.getPlayerNameById(playerId);
+        int teamID = statsDAO.getTeamIdByPlayerId(playerId);
+
+        Stats updatedStats = new Stats(playerId, playerName, teamID, 0, 0, 0);
+        
+        // Check if the player already has stats and update them, otherwise add new stats
+        statsDAO.updateStats(updatedStats);
+
+        response.sendRedirect("stats");  // Redirect back to stats page
+    	
     }
 }

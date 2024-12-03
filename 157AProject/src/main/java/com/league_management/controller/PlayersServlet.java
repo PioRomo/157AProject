@@ -49,8 +49,13 @@ public class PlayersServlet extends HttpServlet {
 
         try {
             if ("delete".equals(action)) {
+            	System.out.println("Deleting Player");
                 deletePlayers(request, response);
-            }else {
+            } else if ("update".equals(action)) {
+            	System.out.println("Updating Player Details");
+            	updatePlayers(request, response);
+            } else {
+            	System.out.println("Creating Player Details");
             	int teamID = Integer.parseInt(request.getParameter("teamID"));
 
                 // Retrieve Player 1 details
@@ -108,6 +113,17 @@ public class PlayersServlet extends HttpServlet {
         response.sendRedirect("players?action=list"); // Redirect back to players list
     }
 
+    private void updatePlayers(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+    	int playerId = Integer.parseInt(request.getParameter("id"));
+        String newName = request.getParameter("name");
+        String newPosition = request.getParameter("position");
+        Players player = playerDAO.getPlayerByID(playerId);
+        
+
+        Players updatedPlayer = new Players(playerId, player.getTeamID(), newName, newPosition); // ID must be passed in
+        playerDAO.updatePlayer(updatedPlayer);
+        response.sendRedirect("players"); // Redirect to the player list
+    }
     
    
 }

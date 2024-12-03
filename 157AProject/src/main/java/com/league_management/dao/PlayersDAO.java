@@ -37,6 +37,17 @@ public class PlayersDAO {
     }
 
 
+    public boolean updatePlayer(Players player) throws SQLException {
+        String query = "UPDATE Players SET TeamID = ?, Name = ?, Position = ? WHERE PlayerID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, player.getTeamID());
+            stmt.setString(2, player.getName());
+            stmt.setString(3, player.getPosition());
+            stmt.setInt(4, player.getPlayerID());
+            return stmt.executeUpdate() > 0;
+        }
+    }
+    
     //Method to delete all players from a team
     public void deletePlayersByTeamID(int teamID) throws SQLException {
         String sql = "DELETE FROM players WHERE teamID = ? LIMIT 3";

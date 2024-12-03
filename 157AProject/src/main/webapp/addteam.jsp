@@ -47,7 +47,7 @@
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <input type="text" name="player3Name" placeholder="Player 3 Name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
-                        <input list="position-types" type="input-field" name="player3Position" placeholder="Position" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                        <input list="position-types" type="text" name="player3Position" placeholder="Position" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
                     </div>
                     <datalist id="position-types">
                     	<option value="Forward" />
