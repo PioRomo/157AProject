@@ -45,9 +45,9 @@
           <div class="mb-4 text-grey-700 leading-6">Three per team</div>
         </div>
         <div class="text-center p-2 rounded-2xl bg-white flex-1 max-w-72">
-          <div class="text-6xl font-bold text-black mb-2">16</div>
+          <div class="text-6xl font-bold text-black mb-2">15</div>
           <div class="text-2xl leading-none text-black mb-4">games</div>
-          <div class="mb-4 text-grey-700 leading-6">Scores displayed by default</div>
+          <div class="mb-4 text-grey-700 leading-6">Results displayed by default</div>
         </div>
       </div>
     </div>
